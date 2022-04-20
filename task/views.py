@@ -1,5 +1,6 @@
-
-from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from task.form import TaskForm
@@ -7,7 +8,7 @@ from task.models import Tag, Task
 
 
 class TaskListView(generic.ListView):
-    # https://prnt.sc/eZwGA5CdwMNO
+    # https://prnt.sc/OUf8jy3LDelg
     model = Task
 
 
@@ -57,3 +58,16 @@ class TagDeleteView(generic.DeleteView):
     template_name = 'task/tag_confirm_delete.html'
     success_url = reverse_lazy("task:tags-list")
 
+
+def change_button_view(request, pk):
+    # https://prnt.sc/2X5WDYvjhz4C
+    button = Task.objects.get(id=pk)
+
+    if button.is_done:
+        button.is_done = False
+    else:
+        button.is_done = True
+
+    button.save()
+
+    return HttpResponseRedirect(reverse("taxi:home-page"))

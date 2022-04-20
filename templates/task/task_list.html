@@ -12,6 +12,15 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{ task.content }} {{ task.is_done|yesno:'Done, Not done'}}
+                <form action="{% url 'task:change-button' pk=task.id %}" method="post">
+                    {% if task.is_done %}
+                        {% csrf_token %}
+                        <input style="color: red" type="submit" value="Complete">
+                    {% else %}
+                        {% csrf_token %}
+                        <input style="color: green" type="submit" value="Undo">
+                    {% endif %}
+                </form>
             </h5>
             <h6 class="card-subtitle mb-2 text-muted">
                 Create: {{ task.datetime }}
