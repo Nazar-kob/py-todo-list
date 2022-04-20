@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <h1>Delete teg</h1>
+    <p>Really wanna remove teg: {{ tag.name|title }} </p>
+    <p>Click yes or no</p>
+    <br>
+
+    <form action="" method="post">
+    {% csrf_token %}
+        <input class="btn btn-primary" type="submit" value="Yes">
+        <a class="btn btn-primary" href="{% url "task:tags-list" %}">No</a>
+    </form>
+{% endblock %}
